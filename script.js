@@ -10,7 +10,7 @@ function mostrarMensagem() {
     if (nome.toLowerCase() === "wesley") {
         mensagem = "Eae Sor, como vai? Se tu tiver disposição e vontade pra comparecer nesse dia, seria incrível! Do contrário, relaxa e nem se apega!";
     } else if (nome.toLowerCase() === "theilor") {
-        mensagem = "Theilor, não posso esperar para te ver lá! Vai ser épico!";
+        mensagem = "Irmão, eu nem precisaria dizer o quanto quero que tu vá né. Vamos curtir o final de semana e mais ainda o domingo! Ah e não esquece da Victória, ela também está convidada.";
     } else if (nome.toLowerCase() === "leandro") {
         mensagem = ""
     }
