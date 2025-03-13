@@ -1,19 +1,25 @@
-function adicionarTarefa() {
+function mostrarMensagem() {
+    // Recebe o valor do input do usuário
+    let inputName = document.getElementById("inputName");
+    let nome = inputName.value;
 
-    //recebe valor do input do usuário
-    let inputTarefa = document.getElementById("inputTarefa")
-    let tarefa = inputTarefa.value
+    // Variável para a mensagem personalizada
+    let mensagem;
 
-    //cria novo item (li) e insere na (lista ul)
-    let listaTarefas = document.getElementById("listaTarefas")
-    let novaTarefa = document.createElement("li")
-    novaTarefa.textContent = tarefa
-    listaTarefas.appendChild(novaTarefa)
+    // Condição para verificar o nome e atribuir a mensagem correspondente
+    if (nome.toLowerCase() === "wesley") {
+        mensagem = "Eae Sor, como vai? Se tu tiver disposição e vontade pra comparecer nesse dia, seria incrível! Do contrário, relaxa e nem se apega!";
+    } else if (nome.toLowerCase() === "theilor") {
+        mensagem = "Theilor, não posso esperar para te ver lá! Vai ser épico!";
+    } else if (nome.toLowerCase() === "leandro") {
+        mensagem = ""
+    }
+        
+    
 
-    //mensagem de tarefa adicionada com sucesso
-    let mensagem = "Tarefa adicionada com sucesso!"
-    document.getElementById("mensagem").textContent = mensagem
+    // Exibe a mensagem personalizada
+    document.getElementById("mensagem").textContent = mensagem;
 
-    //limpa o input do usuário
-    inputTarefa.value = ""
+    // Limpa o input do usuário
+    inputName.value = "";
 }
