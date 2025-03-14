@@ -77,7 +77,7 @@ input[type="text"]:focus {
 
 header {
     margin-top: -100px; /* Move o header mais para cima */
-    margin-bottom: 100px; /* Espaço entre o título e o container */
+    margin-bottom: 60px; /* Espaço entre o título e o container */
     text-align: center;
 }
 
