@@ -35,17 +35,21 @@ function mostrarMensagem() {
     inputName.value = "";
 }
 
-// Função para adicionar o nome à lista de confirmados
+// Função para adicionar ou remover o nome à lista de confirmados
 function confirmarPresenca(nome) {
-    // Adiciona o nome na lista localStorage
+    // Adiciona ou remove o nome na lista localStorage
     let confirmados = JSON.parse(localStorage.getItem("confirmados")) || [];
 
-    // Verifica se o nome já está na lista
-    if (!confirmados.includes(nome)) {
+    if (confirmados.includes(nome)) {
+        // Se o nome já está na lista, remove ele
+        confirmados = confirmados.filter(item => item !== nome);
+    } else {
+        // Caso contrário, adiciona o nome à lista
         confirmados.push(nome);
-        localStorage.setItem("confirmados", JSON.stringify(confirmados)); // Atualiza no localStorage
-        carregarListaConfirmados();
     }
+
+    localStorage.setItem("confirmados", JSON.stringify(confirmados)); // Atualiza no localStorage
+    carregarListaConfirmados();
 }
 
 // Função para carregar a lista de confirmados do localStorage
@@ -58,6 +62,15 @@ function carregarListaConfirmados() {
     confirmados.forEach(nome => {
         let itemConfirmado = document.createElement("li");
         itemConfirmado.textContent = nome;
+
+        // Cria o botão de remoção
+        let botaoRemover = document.createElement("button");
+        botaoRemover.textContent = "Remover";
+        botaoRemover.onclick = function() {
+            confirmarPresenca(nome); // Vai chamar a função novamente para remover
+        };
+
+        itemConfirmado.appendChild(botaoRemover);
         listaConfirmados.appendChild(itemConfirmado);
     });
 }
