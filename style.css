@@ -4,11 +4,31 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100vw;
     margin: 0;
     background-color: #331F19;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
 }
+
+#divmain{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 480px) and (max-height: 940px) {
+    #divmain{
+        width: 85%;
+        height: 85%;
+    }
+}
+
 .container {
     text-align: center;
     background-color: #CBBBA7;
@@ -18,14 +38,18 @@ body {
     width: 90%;
     max-width: 600px;
     border: 2px solid #8B7D70;
+    margin-bottom: 68px;
 }
+
 h1 {
     color: #331F19;
 }
+
 p {
     color: #331F19;
     font-size:20px;
 }
+
 button {
     background-color: #60041A;
     color: #F4F0EA;
@@ -37,14 +61,17 @@ button {
     transition: background-color 0.3s ease;
     margin-top: 10px;
 }
+
 button:hover {
     background-color: #A34743;
 }
+
 ul {
     list-style: none;
     padding: 0;
     margin-top: 20px;
 }
+
 ul li {
     background-color: #F4F0EA;
     color: #331F19;
@@ -68,34 +95,33 @@ input[type="text"] {
     outline: none;
     transition: border-color 0.3s ease;
 }
+
 input[type="text"]:focus {
     border-color: #60041A;
     box-shadow: inset 0 2px 4px rgba(96, 4, 26, 0.3);
 }
 
-
-
-header {
-    margin-top: -100px; /* Move o header mais para cima */
+#headermain {
+    margin-top: 10px; /* Move o header mais para cima */
     margin-bottom: 60px; /* Espaço entre o título e o container */
     text-align: center;
 }
 
-header h1 {
+#headerh1 {
     color: #F4F0EA;
     font-size: 70px;
     margin: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-header h2 {
+#headerh2 {
     color: #F4F0EA;
     font-size: 26px;
     margin: 1;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-header h3 {
+#headerh3 {
     color: #F4F0EA;
     font-size: 20px;
     margin: 4;
