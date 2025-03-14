@@ -58,11 +58,16 @@ function confirmarPresenca(nome) {
 
         if (!confirmados.includes(nome)) {
             confirmados.push(nome);
+
             // Atualizando no Firebase
             update(confirmadosRef, {
                 [nome]: true,
+            }).then(() => {
+                // Atualiza a lista no front-end depois de confirmar no Firebase
+                carregarListaConfirmados();
+            }).catch((error) => {
+                console.error("Erro ao atualizar o Firebase: ", error);
             });
-            carregarListaConfirmados();
         }
     });
 }
