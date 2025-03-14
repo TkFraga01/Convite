@@ -1,8 +1,29 @@
+// Importando as funções necessárias do Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+
+// Sua configuração do Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCkvGbo6rPQWrCxDf7vYhVg2sX6JODcty4",
+  authDomain: "convite-25c33.firebaseapp.com",
+  databaseURL: "https://convite-25c33-default-rtdb.firebaseio.com",
+  projectId: "convite-25c33",
+  storageBucket: "convite-25c33.firebasestorage.app",
+  messagingSenderId: "734325609785",
+  appId: "1:734325609785:web:36645c639f8f20d25444e8",
+  measurementId: "G-8VBRRT77VQ"
+};
+
+// Inicializando o Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
 // Carrega a lista de confirmados ao abrir o site
 window.onload = function() {
     carregarListaConfirmados();
 };
 
+// Função para mostrar a mensagem e o botão de confirmação
 function mostrarMensagem() {
     // Recebe o valor do input do usuário
     let inputName = document.getElementById("inputName");
@@ -17,7 +38,9 @@ function mostrarMensagem() {
     } else if (nome.toLowerCase() === "theilor") {
         mensagem = "Irmão, eu nem precisaria dizer o quanto quero que tu vá né. Vamos curtir o final de semana e mais ainda o domingo! Ah e não esquece da Victória, ela também está convidada.";
     } else if (nome.toLowerCase() === "leandro") {
-        mensagem = ""
+        mensagem = "Mensagem para Leandro"; // Personalize conforme necessário
+    } else {
+        mensagem = "Oi, " + nome + "! Você está convidado para o meu aniversário!";
     }
 
     // Exibe a mensagem personalizada
@@ -35,51 +58,25 @@ function mostrarMensagem() {
     inputName.value = "";
 }
 
-// Função para adicionar o nome à lista de confirmados
+// Função para adicionar o nome à lista de confirmados no Firebase
 function confirmarPresenca(nome) {
-    // Adiciona o nome na lista localStorage
-    let confirmados = JSON.parse(localStorage.getItem("confirmados")) || [];
+    // Referência ao caminho onde vamos armazenar os confirmados
+    const confirmadosRef = ref(database, 'confirmados/' + nome);
 
-    // Verifica se o nome já está na lista
-    if (!confirmados.includes(nome)) {
-        confirmados.push(nome);
-        localStorage.setItem("confirmados", JSON.stringify(confirmados)); // Atualiza no localStorage
-        carregarListaConfirmados();
-    }
-}
-
-// Função para carregar a lista de confirmados do localStorage
-function carregarListaConfirmados() {
-    let confirmados = JSON.parse(localStorage.getItem("confirmados")) || [];
-    let listaConfirmados = document.getElementById("listaConfirmados");
-    listaConfirmados.innerHTML = ""; // Limpa a lista antes de adicionar os novos nomes
-
-    // Adiciona os confirmados na lista
-    confirmados.forEach(nome => {
-        let itemConfirmado = document.createElement("li");
-        itemConfirmado.textContent = nome;
-
-        // Cria o botão de remoção
-        let botaoRemover = document.createElement("button");
-        botaoRemover.textContent = "Remover";
-        botaoRemover.onclick = function() {
-            removerPresenca(nome);
-        };
-
-        // Adiciona o botão ao lado do nome
-        itemConfirmado.appendChild(botaoRemover);
-        listaConfirmados.appendChild(itemConfirmado);
+    // Grava o nome no banco de dados
+    set(confirmadosRef, {
+        nome: nome
+    }).then(() => {
+        console.log("Nome adicionado ao banco de dados!");
+        carregarListaConfirmados(); // Atualiza a lista
+    }).catch((error) => {
+        console.error("Erro ao adicionar nome: ", error);
     });
 }
 
-// Função para remover o nome da lista de confirmados
-function removerPresenca(nome) {
-    let confirmados = JSON.parse(localStorage.getItem("confirmados")) || [];
-
-    // Remove o nome da lista
-    confirmados = confirmados.filter(item => item !== nome);
-
-    // Atualiza o localStorage e recarrega a lista
-    localStorage.setItem("confirmados", JSON.stringify(confirmados));
-    carregarListaConfirmados();
-}
+// Função para carregar a lista de confirmados do Firebase
+function carregarListaConfirmados() {
+    const confirmadosRef = ref(database, 'confirmados');
+    get(confirmadosRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            const confirmado
