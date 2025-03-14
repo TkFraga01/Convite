@@ -6,6 +6,8 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #331F19;
+    flex-direction: column;
+    position: relative;
 }
 .container {
     text-align: center;
@@ -22,7 +24,7 @@ h1 {
 }
 p {
     color: #331F19;
-    font-size: 1.1em;
+    font-size:20px;
 }
 button {
     background-color: #60041A;
@@ -69,4 +71,19 @@ input[type="text"] {
 input[type="text"]:focus {
     border-color: #60041A;
     box-shadow: inset 0 2px 4px rgba(96, 4, 26, 0.3);
+}
+
+
+
+header {
+    margin-top: -100px; /* Move o header mais para cima */
+    margin-bottom: 100px; /* Espaço entre o título e o container */
+    text-align: center;
+}
+
+header h1 {
+    color: #F4F0EA;
+    font-size: 70px;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
