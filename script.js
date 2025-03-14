@@ -42,7 +42,7 @@ function mostrarMensagem() {
     }
 
     // Exibe a mensagem personalizada
-    document.getElementById("mensagem").textContent = mensagem;
+    document.getElementById("mensagem").innerHTML = mensagem;
 
     // Limpa o input do usuário
     inputName.value = "";
