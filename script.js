@@ -3,6 +3,12 @@ function mostrarMensagem() {
     let inputName = document.getElementById("inputName");
     let nome = inputName.value;
 
+    // Verifica se o campo de nome está vazio
+    if (nome.trim() === "") {
+        alert("Por favor, digite um nome.");
+        return; // Impede que a mensagem seja exibida sem um nome válido
+    }
+
     // Variável para a mensagem personalizada
     let mensagem;
 
