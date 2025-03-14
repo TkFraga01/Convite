@@ -35,21 +35,17 @@ function mostrarMensagem() {
     inputName.value = "";
 }
 
-// Função para adicionar ou remover o nome à lista de confirmados
+// Função para adicionar o nome à lista de confirmados
 function confirmarPresenca(nome) {
-    // Adiciona ou remove o nome na lista localStorage
+    // Adiciona o nome na lista localStorage
     let confirmados = JSON.parse(localStorage.getItem("confirmados")) || [];
 
-    if (confirmados.includes(nome)) {
-        // Se o nome já está na lista, remove ele
-        confirmados = confirmados.filter(item => item !== nome);
-    } else {
-        // Caso contrário, adiciona o nome à lista
+    // Verifica se o nome já está na lista
+    if (!confirmados.includes(nome)) {
         confirmados.push(nome);
+        localStorage.setItem("confirmados", JSON.stringify(confirmados)); // Atualiza no localStorage
+        carregarListaConfirmados();
     }
-
-    localStorage.setItem("confirmados", JSON.stringify(confirmados)); // Atualiza no localStorage
-    carregarListaConfirmados();
 }
 
 // Função para carregar a lista de confirmados do localStorage
@@ -67,10 +63,23 @@ function carregarListaConfirmados() {
         let botaoRemover = document.createElement("button");
         botaoRemover.textContent = "Remover";
         botaoRemover.onclick = function() {
-            confirmarPresenca(nome); // Vai chamar a função novamente para remover
+            removerPresenca(nome);
         };
 
+        // Adiciona o botão ao lado do nome
         itemConfirmado.appendChild(botaoRemover);
         listaConfirmados.appendChild(itemConfirmado);
     });
+}
+
+// Função para remover o nome da lista de confirmados
+function removerPresenca(nome) {
+    let confirmados = JSON.parse(localStorage.getItem("confirmados")) || [];
+
+    // Remove o nome da lista
+    confirmados = confirmados.filter(item => item !== nome);
+
+    // Atualiza o localStorage e recarrega a lista
+    localStorage.setItem("confirmados", JSON.stringify(confirmados));
+    carregarListaConfirmados();
 }
