@@ -1,6 +1,6 @@
 // Importando as funções necessárias do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
 // Sua configuração do Firebase
 const firebaseConfig = {
@@ -68,7 +68,6 @@ function confirmarPresenca(nome) {
         nome: nome
     }).then(() => {
         console.log("Nome adicionado ao banco de dados!");
-        carregarListaConfirmados(); // Atualiza a lista
     }).catch((error) => {
         console.error("Erro ao adicionar nome: ", error);
     });
@@ -77,6 +76,42 @@ function confirmarPresenca(nome) {
 // Função para carregar a lista de confirmados do Firebase
 function carregarListaConfirmados() {
     const confirmadosRef = ref(database, 'confirmados');
-    get(confirmadosRef).then((snapshot) => {
+
+    // Escuta mudanças em tempo real
+    onValue(confirmadosRef, (snapshot) => {
         if (snapshot.exists()) {
-            const confirmado
+            const confirmados = snapshot.val();
+            let listaConfirmados = document.getElementById("listaConfirmados");
+            listaConfirmados.innerHTML = ""; // Limpa a lista antes de adicionar os novos nomes
+
+            // Adiciona os confirmados na lista
+            for (let nome in confirmados) {
+                let itemConfirmado = document.createElement("li");
+                itemConfirmado.textContent = confirmados[nome].nome;
+
+                // Cria o botão de remoção
+                let botaoRemover = document.createElement("button");
+                botaoRemover.textContent = "Remover";
+                botaoRemover.onclick = function() {
+                    removerPresenca(nome);
+                };
+
+                // Adiciona o botão ao lado do nome
+                itemConfirmado.appendChild(botaoRemover);
+                listaConfirmados.appendChild(itemConfirmado);
+            }
+        } else {
+            console.log("Não há confirmados ainda.");
+        }
+    });
+}
+
+// Função para remover o nome da lista de confirmados no Firebase
+function removerPresenca(nome) {
+    const confirmadosRef = ref(database, 'confirmados/' + nome);
+    set(confirmadosRef, null).then(() => {
+        console.log("Nome removido do banco de dados!");
+    }).catch((error) => {
+        console.error("Erro ao remover nome: ", error);
+    });
+}
